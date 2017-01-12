@@ -403,7 +403,7 @@ open class WebSocket : NSObject, StreamDelegate {
         if let sec = security, !certValidated && [.hasBytesAvailable, .hasSpaceAvailable].contains(eventCode) {
             let trust = aStream.property(forKey: kCFStreamPropertySSLPeerTrust as Stream.PropertyKey) as! SecTrust
             let domain = aStream.property(forKey: kCFStreamSSLPeerName as Stream.PropertyKey) as? String
-            if sec.isValid(trust, domain: domain) {
+            if sec.isValid(trust, domain: domain) || disableSSLCertValidation {
                 certValidated = true
             } else {
                 let error = errorWithDetail("Invalid SSL certificate", code: 1)
