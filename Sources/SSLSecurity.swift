@@ -167,7 +167,9 @@ open class SSLSecurity : SSLTrustValidator {
             for cert in certs {
                 collect.append(SecCertificateCreateWithData(nil,cert as CFData)!)
             }
-            SecTrustSetAnchorCertificates(trust,collect as NSArray)
+            if !collect.isEmpty {
+                SecTrustSetAnchorCertificates(trust,collect as NSArray)
+            }
             var result: SecTrustResultType = .unspecified
             SecTrustEvaluate(trust,&result)
             if result == .unspecified || result == .proceed {
