@@ -173,7 +173,7 @@ open class SSLSecurity : SSLTrustValidator {
             var result: SecTrustResultType = .unspecified
             SecTrustEvaluate(trust,&result)
             if result == .unspecified || result == .proceed {
-                if !validateEntireChain {
+                if !validateEntireChain || collect.isEmpty {
                     return true
                 }
                 var trustedCount = 0
